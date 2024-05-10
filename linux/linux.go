@@ -1,0 +1,3 @@
+package linux
+
+func GetInfo()
