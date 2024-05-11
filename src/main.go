@@ -13,4 +13,5 @@ func InitCMD() {
 	fmt.Printf("%s", info.Kernel)
 	fmt.Printf("%s", info.Uptime)
 	fmt.Printf("%s", info.Packages)
+	fmt.Printf("%s", info.Shell)
 }

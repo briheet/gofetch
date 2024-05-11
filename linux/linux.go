@@ -3,10 +3,11 @@ package linux
 import (
 	"fmt"
 	"log"
+	"os"
 	"os/exec"
 	"strings"
 
-	"github.com/briheet/gofetch/os"
+	osinfo "github.com/briheet/gofetch/os"
 )
 
 type (
@@ -33,13 +34,13 @@ func init() {
 }
 
 type Linux struct {
-	os.Parameters
+	osinfo.Parameters
 }
 
 func getName() (string, error) {
 	var name string
 
-	name, err := os.ExecuteCommand("whoami")
+	name, err := osinfo.ExecuteCommand("whoami")
 	if err != nil {
 		return "", err
 	}
@@ -50,7 +51,7 @@ func getName() (string, error) {
 func getHost() (string, error) {
 	var host string
 
-	host, err := os.ExecuteCommand("hostname")
+	host, err := osinfo.ExecuteCommand("hostname")
 	if err != nil {
 		return "", err
 	}
@@ -61,7 +62,7 @@ func getHost() (string, error) {
 func getKernel() (string, error) {
 	var kernel string
 
-	kdirv, err := os.ExecuteCommand("uname", "-srm")
+	kdirv, err := osinfo.ExecuteCommand("uname", "-srm")
 	if err != nil {
 		return "", err
 	}
@@ -74,7 +75,7 @@ func getKernel() (string, error) {
 func getUptime() (string, error) {
 	var uptime string
 
-	uptime, err := os.ExecuteCommand("uptime")
+	uptime, err := osinfo.ExecuteCommand("uptime")
 	if err != nil {
 		return "", err
 	}
@@ -99,13 +100,13 @@ func getPackages() (string, error) {
 	// Convert byte slice to string
 	pkgManager := strings.TrimSpace(string(output))
 
-	fmt.Println(pkgManager)
+	// fmt.Println(pkgManager)
 	name, exists := distrosPackages[PackageManager(pkgManager)]
 	if !exists {
 		return "Unknown", fmt.Errorf("package manager not found")
 	}
 
-	ans, err := os.ExecuteCommand("bash", "-c", string(name))
+	ans, err := osinfo.ExecuteCommand("bash", "-c", string(name))
 	if err != nil {
 		return "", err
 	}
@@ -113,6 +114,33 @@ func getPackages() (string, error) {
 	total := pkgManager + " " + ans
 
 	return total, nil
+}
+
+func getShell() (string, error) {
+	var shell string
+
+	// in shell we can write -p $$ but in go exec command we have to first get pid
+	pid := fmt.Sprintf("%d", os.Getppid())
+
+	cmd := exec.Command("ps", "-p", pid, "-o", "comm=")
+	output, err := cmd.Output()
+	if err != nil {
+		return "", fmt.Errorf("not able to get the shell: %v", err)
+	}
+
+	shell = strings.TrimSpace(string(output))
+	fmt.Println(shell)
+
+	// var version string
+	//
+	// version, err = osinfo.ExecuteCommand(shell, "--version", "|", "head", "-n1")
+	// if err != nil {
+	// 	return "", fmt.Errorf("not able to get version of the shell: %v", err)
+	// }
+	//
+	// total := shell + " " + version
+
+	return shell, nil
 }
 
 func GetInfo() *Linux {
@@ -142,12 +170,17 @@ func GetInfo() *Linux {
 	}
 	currentInfo.Uptime = uptime
 
-	fmt.Println("uptime done")
 	packages, err := getPackages()
 	if err != nil {
 		log.Fatal(err)
 	}
 	currentInfo.Packages = packages
+
+	shell, err := getShell()
+	if err != nil {
+		log.Fatal(err)
+	}
+	currentInfo.Shell = shell
 
 	return &currentInfo
 }
