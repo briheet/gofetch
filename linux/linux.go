@@ -119,26 +119,20 @@ func getPackages() (string, error) {
 func getShell() (string, error) {
 	var shell string
 
-	// in shell we can write -p $$ but in go exec command we have to first get pid
-	pid := fmt.Sprintf("%d", os.Getppid())
-
-	cmd := exec.Command("ps", "-p", pid, "-o", "comm=")
-	output, err := cmd.Output()
+	output, err := osinfo.ExecuteCommand(os.ExpandEnv("$SHELL"), "--version")
 	if err != nil {
 		return "", fmt.Errorf("not able to get the shell: %v", err)
 	}
 
-	shell = strings.TrimSpace(string(output))
-	fmt.Println(shell)
+	lines := strings.Split(string(output), "\n")
 
-	// var version string
-	//
-	// version, err = osinfo.ExecuteCommand(shell, "--version", "|", "head", "-n1")
-	// if err != nil {
-	// 	return "", fmt.Errorf("not able to get version of the shell: %v", err)
-	// }
-	//
-	// total := shell + " " + version
+	// I want only the first line
+	var firstLine string
+	if len(lines) > 0 {
+		firstLine = lines[0]
+	}
+
+	shell = firstLine
 
 	return shell, nil
 }
