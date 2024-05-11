@@ -1,4 +1,4 @@
-package main
+package src
 
 import (
 	"fmt"
@@ -6,7 +6,7 @@ import (
 	"github.com/briheet/gofetch/linux"
 )
 
-func main() {
+func InitCMD() {
 	info := linux.GetInfo()
 	fmt.Printf("%s", info.Name)
 	fmt.Printf("%s", info.Host)
