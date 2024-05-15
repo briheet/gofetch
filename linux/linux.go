@@ -137,6 +137,12 @@ func getShell() (string, error) {
 	return shell, nil
 }
 
+func getResolution() (string, error) {
+	var Resolution string
+
+	return Resolution, nil
+}
+
 func GetInfo() *Linux {
 	currentInfo := Linux{}
 
@@ -175,6 +181,12 @@ func GetInfo() *Linux {
 		log.Fatal(err)
 	}
 	currentInfo.Shell = shell
+
+	resolution, err := getResolution()
+	if err != nil {
+		log.Fatal(err)
+	}
+	currentInfo.Resolution = resolution
 
 	return &currentInfo
 }
