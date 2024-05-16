@@ -21,7 +21,6 @@ type Parameters struct {
 	Resolution string
 	WM         string
 	Theme      string
-	Icons      string
 	Terminal   string
 	CPU        string
 	GPU        string

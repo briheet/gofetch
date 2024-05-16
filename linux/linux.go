@@ -148,6 +148,28 @@ func getResolution() (string, error) {
 	return Resolution, nil
 }
 
+func getWindowManager() (string, error) {
+	var Windowmanager string
+
+	Windowmanager, err := osinfo.ExecuteCommand("echo", os.ExpandEnv("$XDG_CURRENT_DESKTOP"))
+	if err != nil {
+		return "", fmt.Errorf("not able to get the windowmanager: %v", err)
+	}
+
+	return Windowmanager, nil
+}
+
+func getTheme() (string, error) {
+	var Theme string
+
+	Theme, err := osinfo.ExecuteCommand("bash", "-c", "gsettings get org.gnome.desktop.interface gtk-theme")
+	if err != nil {
+		return "", fmt.Errorf("not able to get the present theme: %v", err)
+	}
+
+	return Theme, nil
+}
+
 func GetInfo() *Linux {
 	currentInfo := Linux{}
 
@@ -192,6 +214,18 @@ func GetInfo() *Linux {
 		log.Fatal(err)
 	}
 	currentInfo.Resolution = resolution
+
+	windowmanager, err := getWindowManager()
+	if err != nil {
+		log.Fatal(err)
+	}
+	currentInfo.WM = windowmanager
+
+	theme, err := getTheme()
+	if err != nil {
+		log.Fatal(err)
+	}
+	currentInfo.Theme = theme
 
 	return &currentInfo
 }
