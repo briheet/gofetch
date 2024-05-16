@@ -140,6 +140,11 @@ func getShell() (string, error) {
 func getResolution() (string, error) {
 	var Resolution string
 
+	Resolution, err := osinfo.ExecuteCommand("bash", "-c", "xdpyinfo | grep dimensions")
+	if err != nil {
+		return "", fmt.Errorf("not able to get resolution: %v", err)
+	}
+
 	return Resolution, nil
 }
 
