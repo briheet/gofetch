@@ -170,21 +170,21 @@ func getTheme() (string, error) {
 	return Theme, nil
 }
 
-func getTerminal() (string, error) {
-	var Terminal string
-
-	mid, err := osinfo.ExecuteCommand(os.ExpandEnv("$(ps -p $$ -o ppid=)"))
-	if err != nil {
-		return "", fmt.Errorf("not able to get mid terminal: %v", err)
-	}
-
-	Terminal, err = osinfo.ExecuteCommand("bash", "-c", "ps -p", mid, "-o args=")
-	if err != nil {
-		return "", fmt.Errorf("not able to get terminal name: %v", err)
-	}
-
-	return Terminal, nil
-}
+// func getTerminal() (string, error) {
+// 	var Terminal string
+//
+// 	mid, err := osinfo.ExecuteCommand(os.ExpandEnv("$(ps -p $$ -o ppid=)"))
+// 	if err != nil {
+// 		return "", fmt.Errorf("not able to get mid terminal: %v", err)
+// 	}
+//
+// 	Terminal, err = osinfo.ExecuteCommand("bash", "-c", "ps -p", mid, "-o args=")
+// 	if err != nil {
+// 		return "", fmt.Errorf("not able to get terminal name: %v", err)
+// 	}
+//
+// 	return Terminal, nil
+// }
 
 func GetInfo() *Linux {
 	currentInfo := Linux{}
@@ -243,11 +243,11 @@ func GetInfo() *Linux {
 	}
 	currentInfo.Theme = theme
 
-	terminal, err := getTerminal()
-	if err != nil {
-		log.Fatal(err)
-	}
-	currentInfo.Terminal = terminal
+	// terminal, err := getTerminal()
+	// if err != nil {
+	// 	log.Fatal(err)
+	// }
+	// currentInfo.Terminal = terminal
 
 	return &currentInfo
 }
