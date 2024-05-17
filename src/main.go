@@ -16,6 +16,7 @@ func InitCMD() {
 	fmt.Printf("The shell is:           %s\n", info.Shell)
 	fmt.Printf("The Resolution is :    %s", info.Resolution)
 	fmt.Printf("The WindowManager is :  %s", info.WM)
-	fmt.Printf("The Theme is:           %s", info.Theme)
+	fmt.Printf("The Theme is :          %s", info.Theme)
+	fmt.Printf("The Terminal is :       %s", info.Terminal)
 	fmt.Println()
 }
