@@ -1,26 +1,26 @@
 package fetch
 
-type Version interface {
+type Versioner interface {
 	GetOsVersion() string
 }
 
-type Name interface {
+type Namer interface {
 	GetName() string
 }
 
-type Time interface {
+type Timer interface {
 	GetTime() string
 }
 
-type Package interface {
+type Packager interface {
 	GetPackage() string
 }
 
-type Shell interface {
+type Sheller interface {
 	GetShellName() string
 }
 
-type Resolution interface {
+type Resolutioner interface {
 	GetResolution() string
 }
 
@@ -40,7 +40,7 @@ type GPU interface {
 	GetGPU() string
 }
 
-type Usage interface {
+type Usager interface {
 	GetUsage() string
 }
 
@@ -48,17 +48,17 @@ type Kernel interface {
 	GetKernel() string
 }
 
-type Fetch interface {
-	Version
-	Name
-	Time
-	Package
-	Shell
-	Resolution
+type Fetcher interface {
+	Versioner
+	Namer
+	Timer
+	Packager
+	Sheller
+	Resolutioner
 	Environment
 	Terminal
 	CPU
 	GPU
-	Usage
+	Usager
 	Kernel
 }
