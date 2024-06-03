@@ -6,7 +6,7 @@ import (
 	"strings"
 )
 
-func (l *linux) getTerminal() string {
+func (l *linux) GetTerminalName() string {
 	output, err := exec.Command("echo", os.ExpandEnv("$TERM")).CombinedOutput()
 	if err != nil {
 		return "Unknown"

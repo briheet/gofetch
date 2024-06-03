@@ -1,7 +1,7 @@
-# Get the operating system 
+# Add command to build by operative system
 
-SHELL := /bin/bash    # by default make uses /bin/sh
-BIN_DIR := $(CURDIR)/bin	
+SHELL := /bin/bash
+BIN_DIR := $(CURDIR)/bin
 PROJECTNAME=$(shell basename "$(PWD)")
 PWD_PROJECT=$(shell pwd)
 LDFLAGS="-w -X 'main.buildTime=$(shell date)' -X 'main.lastCommit=$(shell git rev-parse HEAD)' -X 'main.semanticVersion=$(shell git describe --tags --dirty=-dev)'"
@@ -11,16 +11,20 @@ GOARCH=$(shell go env GOARCH)
 export GOBIN := $(BIN_DIR)
 
 
-## help: info about what can be done
+## help: Get more info on make commands.
 help: Makefile
-	@echo " Choose a command to run in "$(PROJECTNAME)":"
+	@echo " Choose a command run in "$(PROJECTNAME)":"
 	@sed -n 's/^##//p' $< | column -t -s ':' |  sed -e 's/^/ /'
 .PHONY: help
 
-
+## build gofetch
 build:
 	@echo "--> Building gofetch binary for $(GOOS):$(GOARCH)"
-	  env go build -ldflags $(LDFLAGS) -o gofetch ./cmd/;\
+	@if [ $(GOOS) = "windows" ]; then\
+	  env go build -ldflags $(LDFLAGS) -o gofetch.exe ./cmd/...;\
+  else\
+	  env go build -ldflags $(LDFLAGS) -o gofetch ./cmd/...;\
+  fi
 	@echo "--> gofetch for $(GOOS):$(GOARCH) built at $(PWD_PROJECT)"
 
 .PHONY: build

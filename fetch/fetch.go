@@ -40,8 +40,8 @@ type GPU interface {
 	GetGPU() string
 }
 
-type Usager interface {
-	GetUsage() string
+type Memory interface {
+	GetMemory() string
 }
 
 type Kernel interface {
@@ -59,6 +59,6 @@ type Fetcher interface {
 	Terminal
 	CPU
 	GPU
-	Usager
+	Memory
 	Kernel
 }
