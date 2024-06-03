@@ -26,7 +26,6 @@ func init() {
 }
 
 var gopher = `
-%s
 ⠀⠀⠀⠀⠀⠀⠀⠀⢀⣤⣶⣾⣿⣿⣿⣿⣿⣿⣶⣦⣄⠀⠀⠀⠀⠀⠀ %s
 ⠀⠀⠀⠀⢠⡶⣦⣴⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣦⡴⣦⠀⠀ %s
 ⠀⠀⠀⠀⠀⠙⢿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡟⠉⠀⠀ %s
@@ -39,25 +38,25 @@ var gopher = `
 ⠀⠀⠀⠀⠀⠀⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡇⠀⠀⠀ %s
 ⠀⠀⠀⠀⠀⠀⢹⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⠇⠀⠀⠀ %s
 ⠀⠀⠀⠀⠀⠀⠀⢻⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⠏⠀⠀⠀⠀ %s
-⠀⠀⠀⠀⠀⠀⠀⠀⣹⣿⠿⣿⣿⣿⣿⣿⣿⣿⣿⠿⣿⡁⠀⠀⠀⠀⠀
-%s`
+⠀⠀⠀⠀⠀⠀⠀⠀⣹⣿⠿⣿⣿⣿⣿⣿⣿⣿⣿⠿⣿⡁⠀⠀⠀⠀⠀ 
+`
 
 func initColorFields() {
 	Colors = []*color.Color{Red, Green, Cyan, Yellow, Blue, Magenta}
 
 	fields = map[string]string{
-		"GetOSVersion":          "OS",
-		"GetName":               "name",
-		"GetKernelVersion":      "kernel",
-		"GetUptime":             "uptime",
-		"GetNumberPackages":     "packages",
-		"GetShellInformation":   "shell",
-		"GetResolution":         "resolution",
-		"GetDesktopEnvironment": "DE",
-		"GetTerminalInfo":       "terminal",
-		"GetGPU":                "GPU",
-		"GetCPU":                "CPU",
-		"GetMemoryUsage":        "memory",
+		"GetOsVersion":    "OS",
+		"GetName":         "name",
+		"GetKernel":       "kernel",
+		"GetTime":         "uptime",
+		"GetPackage":      "packages",
+		"GetShellName":    "shell",
+		"GetResolution":   "resolution",
+		"GetEnvironment":  "DE",
+		"GetTerminalName": "terminal",
+		"GetGPU":          "GPU",
+		"GetCPU":          "CPU",
+		"GetMemory":       "memory",
 	}
 }
 

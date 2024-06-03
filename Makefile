@@ -20,9 +20,6 @@ help: Makefile
 ## build gofetch
 build:
 	@echo "--> Building gofetch binary for $(GOOS):$(GOARCH)"
-	@if [ $(GOOS) = "windows" ]; then\
-	  env go build -ldflags $(LDFLAGS) -o gofetch.exe ./cmd/...;\
-  else\
 	  env go build -ldflags $(LDFLAGS) -o gofetch ./cmd/...;\
   fi
 	@echo "--> gofetch for $(GOOS):$(GOARCH) built at $(PWD_PROJECT)"
